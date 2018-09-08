@@ -25,7 +25,7 @@ def sensor():
 @app.route("/startsensor")
 def startsensor():
     while True:
-        values.append(get_sensor_data())
+        values.append(pressure.get_sensor_data())
 
 if __name__ == '__main__':
     app.run(debug=True, threaded=True)
