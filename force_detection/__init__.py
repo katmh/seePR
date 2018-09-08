@@ -19,16 +19,17 @@ def about():
 @app.route("/data")
 def data():
     return '''
-    <script>
     const Http = new XMLHttpRequest();
     const url='http://localhost:5000/sensor';
+
+    while(true){
     Http.open("GET", url);
     Http.send();
     Http.onreadystatechange=(e)=>{
     console.log(Http.responseText)
-    }
 
-    </script>
+    }
+    }
 
 
 
