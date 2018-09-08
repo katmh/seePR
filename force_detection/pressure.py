@@ -1,20 +1,18 @@
 import serial
+from tkinter import *
+from tkinter import ttk
 
+ser = serial.Serial('COM5', 9600)
 
-try:
-    ser = serial.Serial("/dev/cu.usbmodem1421", 9600)
-    port = '/dev/ttyACM0'
+root = Tk()
+labelText = StringVar()
+label_var = Label(root, text="sensor data")
+label_var.grid(row=0, column=0)
 
-    #msg = ard.read(ard.inWaiting())
+x = ser.readline()
+print(x)
+label_var.destroy()
+label_var = Label(root, text=x)
+label_var.grid(row=0, column=0)
 
-    # while True:
-    #     x = ser.readline()
-    def get_sensor_data():
-        return ser.readline()
-#print(x)
-
-except:
-    print("No serial device connected!")
-
-    def get_sensor_data():
-        return "None"
+root.mainloop()

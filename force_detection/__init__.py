@@ -1,8 +1,11 @@
 from . import pressure
 
 from flask import Flask, render_template
-app = Flask(__name__)
+from flask.ext.socketio import SocketIO, emit
 
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'secret!'
+socketio = SocketIO(app)
 
 values = []
 
