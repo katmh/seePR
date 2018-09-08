@@ -3,6 +3,9 @@ from . import pressure
 from flask import Flask, render_template
 app = Flask(__name__)
 
+
+values = []
+
 @app.route("/")
 @app.route("/home")
 def home():
@@ -16,7 +19,13 @@ def about():
 
 @app.route("/sensor")
 def sensor():
-    return(pressure.get_sensor_data())
+    return(values[-1])
+
+
+@app.route("/startsensor")
+def startsensor():
+    while True:
+        values.append(get_sensor_data())
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, threaded=True)
