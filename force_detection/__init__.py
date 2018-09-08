@@ -19,6 +19,7 @@ def about():
 @app.route("/data")
 def data():
     return '''
+    <script>
     const Http = new XMLHttpRequest();
     const url='http://localhost:5000/sensor';
 
@@ -30,6 +31,8 @@ def data():
 
     }
     }
+
+    </script>
 
 
 
