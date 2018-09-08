@@ -20,6 +20,7 @@ void loop(void) {
   fsrReading = analogRead(fsrAnalogPin);
   Serial.print("Analog reading = ");
   Serial.println(fsrReading);
+
  
   // we'll need to change the range from the analog reading (0-1023) down to the range
   // used by analogWrite (0-255) with map!

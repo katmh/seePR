@@ -5,10 +5,9 @@ port = '/dev/ttyACM0'
 
 #msg = ard.read(ard.inWaiting())
 
-x = ser.readline()
-
-
-print(x)
+while True:
+    x = ser.readline()
+    print(x)
         
         
     
