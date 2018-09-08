@@ -17,4 +17,4 @@ except:
     print("No serial device connected!")
 
     def get_sensor_data():
-        return None
+        return "None"

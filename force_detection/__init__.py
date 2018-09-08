@@ -13,6 +13,10 @@ def about():
     return("<h1>About Page<h1>")
     return(x)
 
+
+@app.route("/sensor")
+def sensor():
+    return(pressure.get_sensor_data())
+
 if __name__ == '__main__':
     app.run(debug=True)
-    
