@@ -7,7 +7,7 @@ port = '/dev/ttyACM0'
 
 while True:
     x = ser.readline()
-    print(x)
+    #print(x)
         
         
     
