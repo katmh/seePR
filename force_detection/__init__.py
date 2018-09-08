@@ -16,6 +16,24 @@ def about():
     return("<h1>About Page<h1>")
     return(x)
 
+@app.route("/data")
+def data():
+    return '''
+    <script>
+    const Http = new XMLHttpRequest();
+    const url='http://localhost:5000/sensor';
+    Http.open("GET", url);
+    Http.send();
+    Http.onreadystatechange=(e)=>{
+    console.log(Http.responseText)
+    }
+
+    </script>
+
+
+
+    '''
+
 
 @app.route("/sensor")
 def sensor():
