@@ -18,6 +18,15 @@ LARGE_FONT= ("Verdana", 12)
 style.use("ggplot")
 
 
+
+current_plot = None
+
+
+x = [1,2,3,4,5,6,7,8]
+y = [1,2,3,4,5,6,7,8]
+
+
+
 # Windows: COM5
 # OSX: 
 port = 'COM5'
@@ -36,23 +45,45 @@ class myGUI:
         label_var.pack()
 
         # plot
-        f = Figure(figsize=(5,5), dpi=100)
-        a = f.add_subplot(111)
-        a.plot([1,2,3,4,5,6,7,8],[5,6,1,3,8,9,3,5])
 
-        canvas = FigureCanvasTkAgg(f, self.frame)
-        canvas.show()
-        canvas.get_tk_widget().pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
+
+        self.plot_pressure()
 
     def update_value(self):
         val = str(ser.readline())
-        val = val.split("=")[1] # clean the string
+        print(val)
+        val = val.split("= ")[1] # clean the string
         val = val.split("\\")[0]
-        global label_var
+        print(val)
+        global label_var, x, y
         label_var.destroy()
         label_var = tk.Label(self.frame, text=val)
         label_var.pack()
+        
+        #x.append(val)
+        #y.append(y[-1] + 1)
         self.frame.after(1, self.update_value)
+        self.plot_pressure()
+        #self.frame.after(1, self.plot_pressure)
+
+    def plot_pressure(self):
+        global current_plot
+        if current_plot != None:
+            current_plot.destroy()
+
+        from time import sleep
+        sleep(1)
+        f = Figure(figsize=(5,5), dpi=100)
+        a = f.add_subplot(111)
+
+        global x, y
+
+        a.plot(x, y)
+        
+        canvas = FigureCanvasTkAgg(f, self.frame)
+        canvas.show()
+        current_plot = canvas.get_tk_widget()
+        current_plot.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
 
 root = tk.Tk() # main window
 my_gui = myGUI(root)
