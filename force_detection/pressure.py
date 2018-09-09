@@ -51,10 +51,10 @@ class myGUI:
 
     def update_value(self):
         val = str(ser.readline())
-        print(val)
+        
         val = val.split("= ")[1] # clean the string
         val = val.split("\\")[0]
-        print(val)
+        
         global label_var, x, y
         label_var.destroy()
         label_var = tk.Label(self.frame, text=val)
@@ -63,27 +63,21 @@ class myGUI:
         #x.append(val)
         #y.append(y[-1] + 1)
         self.frame.after(1, self.update_value)
-        self.plot_pressure()
         #self.frame.after(1, self.plot_pressure)
 
     def plot_pressure(self):
-        global current_plot
-        if current_plot != None:
-            current_plot.destroy()
-
-        from time import sleep
-        sleep(1)
         f = Figure(figsize=(5,5), dpi=100)
         a = f.add_subplot(111)
-
-        global x, y
-
         a.plot(x, y)
+
+        #global x, y
         
         canvas = FigureCanvasTkAgg(f, self.frame)
         canvas.show()
         current_plot = canvas.get_tk_widget()
         current_plot.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
+
+        canvas.print_figure('pressure_vs_time.png')
 
 root = tk.Tk() # main window
 my_gui = myGUI(root)
