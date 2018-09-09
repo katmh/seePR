@@ -1,7 +1,15 @@
 import serial
+
 from tkinter import *
 from tkinter import ttk
-import time
+
+import time # for after()
+import random
+
+import matplotlib
+matplotlib.use("TkAgg")
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
 
 # Windows: COM5
@@ -9,25 +17,29 @@ import matplotlib.pyplot as plt
 port = 'COM5'
 ser = serial.Serial(port, 9600)
 
-# GUI
+class myGUI:
+    def __init__(self, master):
+        self.master = master
+        master.title("seePR")
+
+        self.frame = Frame(master)
+        self.frame.pack()
+
+        global label_var
+        label_var = Label(self.frame, text="initial")
+        label_var.pack()
+
+    def update_value(self):
+        val = str(ser.readline())
+        val = val.split("=")[1] # clean the string
+        val = val.split("\\")[0]
+        global label_var
+        label_var.destroy()
+        label_var = Label(self.frame, text=val)
+        label_var.pack()
+        self.frame.after(1, self.update_value)
+
 root = Tk() # main window
-frame = Frame(root, width=1000, height=800)
-frame.pack()
-
-val_list = []
-
-def add_value():
-    val = str(ser.readline())
-    val = val.split("=")[1] # clean the string
-    val = val.split("\\")[0]
-    label_var = Label(frame, text=val)
-    label_var.grid(row=0, column=0)
-    root.after(1, add_value)
-
-    val_list.append(val)
-    plt.plot(val_list)
-    plt.ylabel('pressure values')
-    plt.show()
-
-root.after(0, add_value)
+my_gui = myGUI(root)
+root.after(1, my_gui.update_value())
 root.mainloop()
