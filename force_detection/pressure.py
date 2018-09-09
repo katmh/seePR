@@ -2,7 +2,7 @@ import serial
 
 import tkinter as tk
 from tkinter import ttk
-
+from tkinter import messagebox
 import time # for after()
 import random
 
@@ -68,6 +68,10 @@ class myGUI:
         global val_list, time_list
         val_list.append(val)
         time_list.append(elapsed_time)
+        if val > 800:
+            messagebox.showwarning("Warning","Too high, put lower pressure")
+        if val < 600:
+            messagebox.showwarning("Warning","Too low, put more pressure")
         #print(val_list[-5:])
 
         # call to refresh plot        
